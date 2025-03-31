@@ -1,1 +1,1 @@
-# PrismPostgresql
+# PrismaPostgresql

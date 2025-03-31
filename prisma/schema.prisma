@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+//model this file go to documentation getting started , model your data in the prisma schema
+
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+  posts Post[]  //here post[] means that one user can have multiple post so we give post as an array here
+}
+//  ? means optional that is it can be null or not null, if no question mark then it cant be null is default ,  @id means that is a primary key
+model Post {
+  id        Int     @id @default(autoincrement()) //means we set this as primary key
+  title     String
+  content   String?
+  published Boolean @default(false)
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  Int
+}
+
+//@relation is to define foregin key
